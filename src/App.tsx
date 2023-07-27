@@ -1,10 +1,10 @@
 import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './routes';
 import { AppThemeProvider, DrawerProvider } from './shared/contexts';
-import MenuLateral from './shared/components/menu-lateral/MenuLateral';
+import { MenuLateral } from './shared/components/menu-lateral/MenuLateral';
 
 
-function App() {
+export const App = () => {
   return (
     <AppThemeProvider>
       <DrawerProvider>
@@ -16,6 +16,6 @@ function App() {
       </DrawerProvider>
     </AppThemeProvider>
   );
-}
+};
 
 export default App;
