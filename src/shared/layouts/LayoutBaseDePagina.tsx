@@ -3,12 +3,13 @@ import { Typography, useTheme, IconButton, Icon, useMediaQuery } from '@mui/mate
 import { useDrawerContext } from '../contexts';
 import { ReactNode } from 'react';
 
-interface ILayoutBaseDePagina {
+interface ILayoutBaseDePaginaProps {
   titulo: string;
   barraDeFerramentas?: ReactNode;
+  children: any;
 }
 
-export const LayoutBaseDePagina: React.FC<ILayoutBaseDePagina> = ({ children, barraDeFerramentas, titulo }) => {
+export const LayoutBaseDePagina: React.FC<ILayoutBaseDePaginaProps> = ({ children, barraDeFerramentas, titulo }) => {
     
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
