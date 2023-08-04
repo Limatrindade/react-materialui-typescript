@@ -1,14 +1,14 @@
 import { Environment } from '../../../environment';
 import { Api } from '../axios-config';
 
-interface IListagemPessoa {
+export interface IListagemPessoa {
   id: number;
   nomeCompleto: string;
   email: string;
   cidadeId: number;
 }
 
-interface IDetalhePessoa {
+export interface IDetalhePessoa {
     id: number;
     nomeCompleto: string;
     email: string;
@@ -89,7 +89,7 @@ const deleteById = async (id: number): Promise<void | Error> => {
 };
 
 
-export const PessoasServices = {
+export const PessoasService = {
   getAll,
   getById,
   create,

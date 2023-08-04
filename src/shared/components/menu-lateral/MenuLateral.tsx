@@ -32,8 +32,11 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({ to, icon, label, onClick }
   );
 };
 
+interface Props {
+  children: React.ReactNode;
+}
 
-export const MenuLateral: React.FC = ({ children }) => {
+export const MenuLateral: React.FC<Props> = ({ children }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
