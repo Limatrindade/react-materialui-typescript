@@ -1,16 +1,17 @@
 import { useMemo, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FerramentasDaListagem } from '../../shared/components';
 import { LayoutBaseDePagina } from '../../shared/layouts';
 import { IListagemPessoa, PessoasService } from '../../shared/services/api/pessoas/PessoasService';
 import { useDebounce } from '../../shared/hooks';
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, TableFooter, LinearProgress, Pagination } from '@mui/material';
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, TableFooter, LinearProgress, Pagination, IconButton, Icon } from '@mui/material';
 import { Environment } from '../../shared/environment';
 
 
 export const ListagemDePessoas = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { debounce } = useDebounce();
+  const navigate = useNavigate();
 
   const [rows, setRows] = useState<IListagemPessoa[]>([]);
   const [totalCount, setTotalCount] = useState(0);
@@ -46,7 +47,23 @@ export const ListagemDePessoas = () => {
 
   }, [busca, pagina]);
 
-    
+  const handleDelete = (id: number) => {
+    if(confirm('Realmente deseja apagar?')) {
+      PessoasService.deleteById(id)
+        .then(result => {
+          if (result instanceof Error) {
+            alert(result.message);
+          } else {
+            setRows(oldRows => {
+              return [
+                ...oldRows.filter(oldRow => oldRow.id !== id),
+              ];
+            });
+            alert('Registro apagado com sucesso!');
+          }
+        });
+    }
+  };
 
   return (
     <LayoutBaseDePagina 
@@ -74,7 +91,14 @@ export const ListagemDePessoas = () => {
           <TableBody>
             {rows.map(row => (
               <TableRow key={row.id}>
-                <TableCell>Ações</TableCell>
+                <TableCell>
+                  <IconButton size="small" onClick={() => handleDelete(row.id)}>
+                    <Icon>delete</Icon>
+                  </IconButton>
+                  <IconButton size="small" onClick={() => navigate(`/pessoas/detalhe/${row.id}`)}>
+                    <Icon>edit</Icon>
+                  </IconButton>
+                </TableCell>
                 <TableCell>{row.nomeCompleto}</TableCell>
                 <TableCell>{row.email}</TableCell>
               </TableRow>
