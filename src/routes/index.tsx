@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDrawerContext } from '../shared/contexts';
 import { useEffect } from 'react';
-import { Dashboard, ListagemDePessoas } from '../pages';
+import { Dashboard, DetalheDePessoas, ListagemDePessoas } from '../pages';
 
 
 function AppRoutes() {
@@ -29,7 +29,7 @@ function AppRoutes() {
 
       <Route path='/pessoas' element={<ListagemDePessoas/>} />
 
-      <Route path='/pessoas/detalhe/:id' element={<p>detalhe</p>} />
+      <Route path='/pessoas/detalhe/:id' element={<DetalheDePessoas/>} />
 
       <Route path="*" element={<Navigate to="/pagina-inicial"/>}/>
     </Routes>
