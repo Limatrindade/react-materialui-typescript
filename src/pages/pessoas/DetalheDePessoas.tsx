@@ -1,16 +1,23 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { LayoutBaseDePagina } from '../../shared/layouts';
 import { FerramentasDeDetalhe } from '../../shared/components';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { PessoasService } from '../../shared/services/api/pessoas/PessoasService';
 import { LinearProgress } from '@mui/material';
 import { Form } from '@unform/web';
 import { VTextField } from '../../shared/forms';
+import { FormHandles } from '@unform/core';
 
+interface IFormData {
+  email: string,
+  nomeCompleto: string,
+  cidadeId: string
+}
 
 export const DetalheDePessoas: React.FC = () => {
   const { id = 'nova' } = useParams<'id'>();
   const navigate = useNavigate();
+  const formRef = useRef<FormHandles>(null);
 
   const [isLoading, setIsLoading] = useState(false);
   const [nome, setNome] = useState('');
@@ -32,8 +39,8 @@ export const DetalheDePessoas: React.FC = () => {
     }  
   }, [id]);
 
-  const handleSave = () => {
-    console.log('Save');
+  const handleSave = (dados: IFormData) => {
+    console.log(dados);
   };
 
   const handleDelete = (id: number) => {
@@ -62,17 +69,16 @@ export const DetalheDePessoas: React.FC = () => {
           
           aoClicarEmApagar={() => handleDelete(Number(id))}
           aoClicarEmNovo={() => navigate('/pessoas/detalhe/nova')}
-          aoClicarEmSalvar={handleSave}
+          aoClicarEmSalvar={() => formRef.current?.submitForm()}
           aoClicarEmVoltar={() => navigate('/pessoas')}
-          aoClicarEmSalvarEFechar={handleSave}
+          aoClicarEmSalvarEFechar={() => formRef.current?.submitForm()}
         />
       }
     >
-      <Form onSubmit={() => console.log()}>
-        <VTextField
-          name='nomeCompleto'
-
-        />
+      <Form ref={formRef} onSubmit={handleSave}>
+        <VTextField name='nomeCompleto'/>
+        <VTextField name='email'/>
+        <VTextField name='cidadeId '/>
       </Form>
 
       {isLoading &&(
