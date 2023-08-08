@@ -4,6 +4,8 @@ import { FerramentasDeDetalhe } from '../../shared/components';
 import { useEffect, useState } from 'react';
 import { PessoasService } from '../../shared/services/api/pessoas/PessoasService';
 import { LinearProgress } from '@mui/material';
+import { Form } from '@unform/web';
+import { VTextField } from '../../shared/forms';
 
 
 export const DetalheDePessoas: React.FC = () => {
@@ -66,6 +68,13 @@ export const DetalheDePessoas: React.FC = () => {
         />
       }
     >
+      <Form onSubmit={() => console.log()}>
+        <VTextField
+          name='nomeCompleto'
+
+        />
+      </Form>
+
       {isLoading &&(
         <LinearProgress variant='indeterminate' />
       )}  
