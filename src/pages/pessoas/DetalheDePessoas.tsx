@@ -3,7 +3,7 @@ import { LayoutBaseDePagina } from '../../shared/layouts';
 import { FerramentasDeDetalhe } from '../../shared/components';
 import { useEffect, useRef, useState } from 'react';
 import { PessoasService } from '../../shared/services/api/pessoas/PessoasService';
-import { LinearProgress } from '@mui/material';
+import { LinearProgress, Box, Paper, Grid, Typography } from '@mui/material';
 import { Form } from '@unform/web';
 import { VTextField } from '../../shared/forms';
 import { FormHandles } from '@unform/core';
@@ -99,15 +99,41 @@ export const DetalheDePessoas: React.FC = () => {
       }
     >
       <Form ref={formRef} onSubmit={handleSave}>
-        <VTextField placeholder='Nome completo' name='nomeCompleto'/>
-        <VTextField placeholder='Email' name='email'/>
-        <VTextField placeholder='Cidade id' name='cidadeId '/>
+        <Box margin={1} display="flex" flexDirection="column" component={Paper} variant='outlined'>
+        
+          <Grid container direction="column" padding={2} spacing={2}>
+
+            {isLoading &&(
+              <LinearProgress variant='indeterminate' />
+            )} 
+
+            <Grid item>
+              <Typography variant='h6' >Geral</Typography>
+            </Grid>
+
+            <Grid container item direction="row" spacing={2}>
+              <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
+                <VTextField label='Nome completo' name='nomeCompleto' fullWidth disabled={isLoading} onChange={e => setNome(e.target.value)}/>
+              </Grid>
+            </Grid>
+
+            <Grid container item direction="row" spacing={2}>
+              <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
+                <VTextField label='Email' name='email' fullWidth disabled={isLoading}/>
+              </Grid>
+            </Grid>
+
+            <Grid container item direction="row" spacing={2}>
+              <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
+                <VTextField label='Cidade id' name='cidadeId ' fullWidth disabled={isLoading}/>
+              </Grid>
+            </Grid>
+
+          </Grid>
+
+        </Box>
       </Form>
 
-      {isLoading &&(
-        <LinearProgress variant='indeterminate' />
-      )}  
-      <p> DetalheDePessoas {id}</p>
     </LayoutBaseDePagina>
     
   );
